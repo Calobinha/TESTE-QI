@@ -1,212 +1,268 @@
-<!doctype html>
 <html lang="pt-BR">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Teste de QI Visual — Inteligência e Lógica</title>
-<style>
-  :root{
-    --bg:#0a0f18;
-    --accent:#f6c84c;
-    --text:#f5f7fa;
-  }
-  body{
-    background:radial-gradient(circle at top,#111a27,#06090f 70%);
-    color:var(--text);
-    font-family:'Inter',system-ui,Arial;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    height:100vh;
-    margin:0;
-    padding:20px;
-  }
-  .card{
-    background:rgba(255,255,255,0.04);
-    border-radius:16px;
-    padding:24px;
-    max-width:880px;
-    width:100%;
-    box-shadow:0 0 40px rgba(0,0,0,0.4);
-  }
-  h1{margin:0 0 6px;font-size:1.6rem}
-  p{margin:0 0 14px;opacity:0.9}
-  .question-area{
-    margin-top:16px;
-    background:rgba(255,255,255,0.03);
-    border-radius:12px;
-    padding:16px;
-    text-align:center;
-  }
-  .options{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
-    gap:12px;
-    margin-top:16px;
-  }
-  button.opt{
-    background:rgba(255,255,255,0.05);
-    border:none;
-    border-radius:12px;
-    padding:12px;
-    cursor:pointer;
-    transition:all 0.2s ease;
-  }
-  button.opt:hover{
-    background:rgba(255,255,255,0.15);
-    transform:translateY(-3px);
-  }
-  .meta{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:6px;
-    font-size:0.9rem;
-  }
-  .timer{font-weight:bold;color:var(--accent);}
-  svg{width:80px;height:80px;}
-  .result{margin-top:12px;padding:16px;background:rgba(255,255,255,0.05);border-radius:12px;}
-  .btn{background:var(--accent);border:none;padding:10px 14px;border-radius:8px;cursor:pointer;font-weight:600;margin-top:10px;}
-  .progress{height:8px;background:rgba(255,255,255,0.05);border-radius:8px;overflow:hidden;margin-top:4px;}
-  .progress i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),#f59e0b);width:0%;}
-</style>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Teste de QI Visual — Inteligência e Lógica</title>
+    <style>
+        :root {
+            --bg: #0a0f18;
+            --accent: #f6c84c;
+            --text: #f5f7fa;
+        }
+
+        body {
+            background: radial-gradient(circle at top, #111a27, #06090f 70%);
+            color: var(--text);
+            font-family: 'Inter', system-ui, Arial;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 16px;
+            padding: 24px;
+            max-width: 880px;
+            width: 100%;
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.4);
+        }
+
+        h1 {
+            margin: 0 0 6px;
+            font-size: 1.6rem
+        }
+
+        p {
+            margin: 0 0 14px;
+            opacity: 0.9
+        }
+
+        .question-area {
+            margin-top: 16px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+        }
+
+        .options {
+            display: grid;
+            grid-template-columns:repeat(auto-fit, minmax(140px, 1fr));
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        button.opt {
+            background: rgba(255, 255, 255, 0.05);
+            border: none;
+            border-radius: 12px;
+            padding: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        button.opt:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-3px);
+        }
+
+        .meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 6px;
+            font-size: 0.9rem;
+        }
+
+        .timer {
+            font-weight: bold;
+            color: var(--accent);
+        }
+
+        svg {
+            width: 80px;
+            height: 80px;
+        }
+
+        .result {
+            margin-top: 12px;
+            padding: 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+        }
+
+        .btn {
+            background: var(--accent);
+            border: none;
+            padding: 10px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+
+        .progress {
+            height: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            overflow: hidden;
+            margin-top: 4px;
+        }
+
+        .progress i {
+            display: block;
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent), #f59e0b);
+            width: 0%;
+        }
+    </style>
 </head>
 <body>
-  <div class="card">
+<div class="card">
     <h1>🧠 Teste de QI Visual</h1>
     <p>Observe os padrões e escolha a forma correta. Tempo: 20s por pergunta.</p>
     <div id="game"></div>
-  </div>
+</div>
 
 <script>
-const perQuestionSeconds=20;
-const game=document.getElementById('game');
+    const perQuestionSeconds = 20;
+    const game = document.getElementById('game');
 
-const shapes={
-  circle:'<svg><circle cx="40" cy="40" r="25" fill="#f6c84c"/></svg>',
-  square:'<svg><rect x="15" y="15" width="50" height="50" fill="#f6c84c"/></svg>',
-  triangle:'<svg><polygon points="40,10 70,70 10,70" fill="#f6c84c"/></svg>',
-  star:'<svg><polygon points="40,10 47,35 72,35 52,50 60,75 40,60 20,75 28,50 8,35 33,35" fill="#f6c84c"/></svg>',
-  diamond:'<svg><polygon points="40,10 70,40 40,70 10,40" fill="#f6c84c"/></svg>',
-  hexagon:'<svg><polygon points="25,10 55,10 70,40 55,70 25,70 10,40" fill="#f6c84c"/></svg>'
-};
+    const shapes = {
+        circle: '<svg><circle cx="40" cy="40" r="25" fill="#f6c84c"/></svg>',
+        square: '<svg><rect x="15" y="15" width="50" height="50" fill="#f6c84c"/></svg>',
+        triangle: '<svg><polygon points="40,10 70,70 10,70" fill="#f6c84c"/></svg>',
+        star: '<svg><polygon points="40,10 47,35 72,35 52,50 60,75 40,60 20,75 28,50 8,35 33,35" fill="#f6c84c"/></svg>',
+        diamond: '<svg><polygon points="40,10 70,40 40,70 10,40" fill="#f6c84c"/></svg>',
+        hexagon: '<svg><polygon points="25,10 55,10 70,40 55,70 25,70 10,40" fill="#f6c84c"/></svg>'
+    };
 
-const QUESTIONS=[
-  {
-    q:"1) Complete o padrão: ⭕ 🟧 🔺 ⭕ 🟧 ?",
-    opts:['🔺','⭕','🟧','⬣'],
-    a:0
-  },
-  {
-    q:"2) Qual figura é diferente das outras?",
-    opts:['circle','circle','square','circle'],
-    a:2,
-    visual:true
-  },
-  {
-    q:"3) Qual figura é simétrica verticalmente?",
-    opts:['triangle','diamond','star','hexagon'],
-    a:1,
-    visual:true
-  },
-  {
-    q:"4) Complete a sequência: 2 lados, 3 lados, 4 lados, ?",
-    opts:['pentágono','triângulo','círculo','hexágono'],
-    a:0
-  },
-  {
-    q:"5) Qual figura tem mais vértices?",
-    opts:['triangle','square','hexagon','diamond'],
-    a:2,
-    visual:true
-  },
-  {
-    q:"6) Complete o padrão: 🔺 🔷 🔺 🔷 ?",
-    opts:['🔺','🔷','⬛','⭕'],
-    a:0
-  },
-  {
-    q:"7) Qual forma não pode girar e permanecer igual?",
-    opts:['circle','square','triangle','hexagon'],
-    a:2,
-    visual:true
-  },
-  {
-    q:"8) Se o círculo vale 2, o quadrado vale 4, o triângulo vale 3 — quanto valem juntos?",
-    opts:['7','8','9','10'],
-    a:1
-  },
-  {
-    q:"9) Complete a sequência: pequeno círculo, médio círculo, grande círculo, ?",
-    opts:['menor','maior','mesmo tamanho','nenhum'],
-    a:1
-  },
-  {
-    q:"10) Qual padrão é invertido verticalmente?",
-    opts:['🔺🔻','🔻🔺','⭕🔺','🔺⭕'],
-    a:1
-  }
-];
+    const QUESTIONS = [
+        {
+            q: "1) Complete o padrão: ⭕ 🟧 🔺 ⭕ 🟧 ?",
+            opts: ['🔺', '⭕', '🟧', '⬣'],
+            a: 0
+        },
+        {
+            q: "2) Qual figura é diferente das outras?",
+            opts: ['circle', 'circle', 'square', 'circle'],
+            a: 2,
+            visual: true
+        },
+        {
+            q: "3) Qual figura é simétrica verticalmente?",
+            opts: ['triangle', 'diamond', 'star', 'hexagon'],
+            a: 1,
+            visual: true
+        },
+        {
+            q: "4) Complete a sequência: 2 lados, 3 lados, 4 lados, ?",
+            opts: ['pentágono', 'triângulo', 'círculo', 'hexágono'],
+            a: 0
+        },
+        {
+            q: "5) Qual figura tem mais vértices?",
+            opts: ['triangle', 'square', 'hexagon', 'diamond'],
+            a: 2,
+            visual: true
+        },
+        {
+            q: "6) Complete o padrão: 🔺 🔷 🔺 🔷 ?",
+            opts: ['🔺', '🔷', '⬛', '⭕'],
+            a: 0
+        },
+        {
+            q: "7) Qual forma não pode girar e permanecer igual?",
+            opts: ['circle', 'square', 'triangle', 'hexagon'],
+            a: 2,
+            visual: true
+        },
+        {
+            q: "8) Se o círculo vale 2, o quadrado vale 4, o triângulo vale 3 — quanto valem juntos?",
+            opts: ['7', '8', '9', '10'],
+            a: 1
+        },
+        {
+            q: "9) Complete a sequência: pequeno círculo, médio círculo, grande círculo, ?",
+            opts: ['menor', 'maior', 'mesmo tamanho', 'nenhum'],
+            a: 1
+        },
+        {
+            q: "10) Qual padrão é invertido verticalmente?",
+            opts: ['🔺🔻', '🔻🔺', '⭕🔺', '🔺⭕'],
+            a: 1
+        }
+    ];
 
-let current=0,score=0,timeLeft=perQuestionSeconds,timer=null,answered=false;
+    let current = 0, score = 0, timeLeft = perQuestionSeconds, timer = null, answered = false;
 
-function start(){
-  current=0;score=0;
-  render();
-}
+    function start() {
+        current = 0;
+        score = 0;
+        render();
+    }
 
-function render(){
-  answered=false;
-  timeLeft=perQuestionSeconds;
-  clearInterval(timer);
+    function render() {
+        answered = false;
+        timeLeft = perQuestionSeconds;
+        clearInterval(timer);
 
-  const q=QUESTIONS[current];
-  let html=`<div class='meta'><div>Pergunta ${current+1}/${QUESTIONS.length}</div><div class='timer' id='timer'>${timeLeft}s</div></div>
+        const q = QUESTIONS[current];
+        let html = `<div class='meta'><div>Pergunta ${current + 1}/${QUESTIONS.length}</div><div class='timer' id='timer'>${timeLeft}s</div></div>
             <div class='progress'><i id='bar'></i></div>
             <div class='question-area'><h3>${q.q}</h3>`;
 
-  if(q.visual){
-    html+=<div class='options' id='opts'>${q.opts.map((s,i)=><button class='opt' data-i='${i}'>${shapes[s]}</button>).join('')}</div>;
-  }else{
-    html+=<div class='options' id='opts'>${q.opts.map((t,i)=><button class='opt' data-i='${i}'>${String.fromCharCode(65+i)} — ${t}</button>).join('')}</div>;
-  }
-  html+="</div>";
-  game.innerHTML=html;
+        if (q.visual) {
+            html += `<div class='options' id='opts'>${q.opts.map((s, i) => `<button class='opt' data-i='${i}'>${shapes[s]}</button>`).join('')}</div>`;
+        } else {
+            html += `<div class='options' id='opts'>${q.opts.map((t, i) => `<button class='opt' data-i='${i}'>${String.fromCharCode(65 + i)} — ${t}</button>`).join('')}</div>`;
+        }
+        html += "</div>";
+        game.innerHTML = html;
 
-  document.querySelectorAll('.opt').forEach(btn=>btn.onclick=()=>select(parseInt(btn.dataset.i)));
+        document.querySelectorAll('.opt').forEach(btn => btn.onclick = () => select(parseInt(btn.dataset.i)));
 
-  timer=setInterval(()=>{
-    timeLeft--;
-    document.getElementById('timer').textContent=timeLeft+'s';
-    document.getElementById('bar').style.width=((perQuestionSeconds-timeLeft)/perQuestionSeconds*100)+'%';
-    if(timeLeft<=0){clearInterval(timer);next();}
-  },1000);
-}
+        timer = setInterval(() => {
+            timeLeft--;
+            document.getElementById('timer').textContent = timeLeft + 's';
+            document.getElementById('bar').style.width = ((perQuestionSeconds - timeLeft) / perQuestionSeconds * 100) + '%';
+            if (timeLeft <= 0) {
+                clearInterval(timer);
+                next();
+            }
+        }, 1000);
+    }
 
-function select(i){
-  if(answered)return;
-  answered=true;
-  clearInterval(timer);
-  const correct=QUESTIONS[current].a;
-  if(i===correct)score++;
+    function select(i) {
+        if (answered) return;
+        answered = true;
+        clearInterval(timer);
+        const correct = QUESTIONS[current].a;
+        if (i === correct) score++;
 
-  document.querySelectorAll('.opt').forEach((b,idx)=>{
-    b.disabled=true;
-    if(idx===correct)b.style.border='2px solid lime';
-    else b.style.opacity='0.6';
-  });
-  setTimeout(next,700);
-}
+        document.querySelectorAll('.opt').forEach((b, idx) => {
+            b.disabled = true;
+            if (idx === correct) b.style.border = '2px solid lime';
+            else b.style.opacity = '0.6';
+        });
+        setTimeout(next, 700);
+    }
 
-function next(){
-  clearInterval(timer);
-  if(current<QUESTIONS.length-1){current++;render();}
-  else showResult();
-}
+    function next() {
+        clearInterval(timer);
+        if (current < QUESTIONS.length - 1) {
+            current++;
+            render();
+        } else showResult();
+    }
 
-function showResult(){
-  const qi=estimateIQ(score);
-  game.innerHTML=`
+    function showResult() {
+        const qi = estimateIQ(score);
+        game.innerHTML = `
     <div class='result'>
       <h2>Resultado</h2>
       <p>Acertos: <strong>${score}/${QUESTIONS.length}</strong></p>
@@ -216,19 +272,20 @@ function showResult(){
       <button class='btn' onclick='copyResult(${qi})'>Copiar Resultado</button>
     </div>
   `;
-}
+    }
 
-function estimateIQ(n){
-  const map={0:70,1:75,2:80,3:85,4:90,5:100,6:110,7:120,8:130,9:135,10:140};
-  return map[n]||100;
-}
+    function estimateIQ(n) {
+        const map = {0: 70, 1: 75, 2: 80, 3: 85, 4: 90, 5: 100, 6: 110, 7: 120, 8: 130, 9: 135, 10: 140};
+        return map[n] || 100;
+    }
 
-function copyResult(qi){
-  const txt=Resultado Teste de QI Visual: ${score}/${QUESTIONS.length} — Estimativa ${qi};
-  navigator.clipboard.writeText(txt).then(()=>alert('Resultado copiado!'));
-}
+    function copyResult(qi) {
+        const txt = `Resultado Teste de QI Visual:
+            (${score} / ${QUESTIONS.length}) — Estimativa ${qi}`;
+        navigator.clipboard.writeText(txt).then(() => alert('Resultado copiado!'));
+    }
 
-start();
+    start();
 </script>
 </body>
 </html>
